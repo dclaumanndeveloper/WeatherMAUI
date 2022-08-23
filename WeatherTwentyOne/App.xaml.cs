@@ -14,7 +14,8 @@ public partial class App : Application
         if (DeviceInfo.Idiom == DeviceIdiom.Phone)
             Shell.Current.CurrentItem = PhoneTabs;
 
-        //Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+     // Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+        Routing.RegisterRoute(nameof(AddLocationPage), typeof(AddLocationPage));
     }
 
     async void TapGestureRecognizer_Tapped(System.Object sender, System.EventArgs e)

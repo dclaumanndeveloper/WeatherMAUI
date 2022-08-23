@@ -12,14 +12,14 @@
 
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File">
-            <MenuFlyoutItem Text="Quit" Command="{Binding QuitCommand}"/>
+            <MenuFlyoutItem Text="Sair" Command="{Binding QuitCommand}"/>
         </MenuBarItem>
-        <MenuBarItem Text="Locations">
-            <MenuFlyoutItem Text="Add a Location" Command="{Binding AddLocationCommand}"/>
+        <MenuBarItem Text="Localizações">
+            <MenuFlyoutItem Text="Adicionar Localização" Command="{Binding AddLocationCommand}"/>
         </MenuBarItem>
-        <MenuBarItem Text="View">
-            <MenuFlyoutItem Text="Refresh" Command="{Binding RefreshCommand}"/>
-            <MenuFlyoutItem Text="Toggle Light/Dark Mode" Command="{Binding ToggleModeCommand}"/>
+        <MenuBarItem Text="Ajuda">
+            <MenuFlyoutItem Text="Atualizar" Command="{Binding RefreshCommand}"/>
+            <MenuFlyoutItem Text="Trocar para Modo Claro/Escuro" Command="{Binding ToggleModeCommand}"/>
         </MenuBarItem>
     </ContentPage.MenuBarItems>
 

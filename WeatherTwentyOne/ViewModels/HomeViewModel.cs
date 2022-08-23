@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+
 using WeatherTwentyOne.Models;
 
 namespace WeatherTwentyOne.ViewModels;
@@ -40,22 +43,38 @@ public class HomeViewModel : INotifyPropertyChanged
 
     public HomeViewModel()
     {
-        InitData();
+        InitDataAsync();
 
         ToggleModeCommand = new Command(() => {
             App.Current.UserAppTheme = App.Current.UserAppTheme == AppTheme.Light ? AppTheme.Dark : AppTheme.Light;
         });
     }
 
-    private void InitData()
+    private async Task InitDataAsync()
     {
+        String city = "Maringá";
+        Weather weatherResponse = new Weather();
+        HttpClient client = new HttpClient();
+        client.BaseAddress = new Uri("http://api.openweathermap.org");
+        var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=3fb5d81f3bb184d558a14daa629db53a&units=metric");
+        response.EnsureSuccessStatusCode();
+
+        var stringResult = await response.Content.ReadAsStringAsync();
+        var rawWeather = JsonConvert.DeserializeObject<OpenWeatherApiResponse>(stringResult);
+        weatherResponse.Max = rawWeather.Main.Temp_max;
+        weatherResponse.Min = rawWeather.Main.Temp_min;
+        weatherResponse.Actually = rawWeather.Main.Temp;
+        weatherResponse.DateCache = DateTime.Now;
+        weatherResponse.City = city;
+
+       
         Week = new List<Forecast>
             {
                 new Forecast
                 {
                     DateTime = DateTime.Today.AddDays(1),
                     Day = new Day{ Phrase = "fluent_weather_sunny_high_20_filled" },
-                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "F", Value = 52 }, Maximum = new Maximum { Unit = "F", Value = 77 } },
+                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "C", Value = Convert.ToInt16(weatherResponse.Min) }, Maximum = new Maximum { Unit = "C", Value = Convert.ToInt16(weatherResponse.Max) } },
                 },
                 new Forecast
                 {
@@ -97,7 +116,7 @@ public class HomeViewModel : INotifyPropertyChanged
                 {
                     DateTime = DateTime.Today.AddDays(1),
                     Day = new Day{ Phrase = "fluent_weather_sunny_high_20_filled" },
-                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "F", Value = 52 }, Maximum = new Maximum { Unit = "F", Value = 77 } },
+                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "F", Value = 56 }, Maximum = new Maximum { Unit = "F", Value = 77 } },
                 },
                 new Forecast
                 {
@@ -170,7 +189,7 @@ public class HomeViewModel : INotifyPropertyChanged
                 {
                     DateTime = DateTime.Now.AddHours(5),
                     Day = new Day{ Phrase = "fluent_weather_cloudy_20_filled" },
-                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "F", Value = 52 }, Maximum = new Maximum { Unit = "F", Value = 67 } },
+                    Temperature = new Temperature{ Minimum = new Minimum{ Unit = "F", Value = 56 }, Maximum = new Maximum { Unit = "F", Value = 67 } },
                 },
                 new Forecast
                 {

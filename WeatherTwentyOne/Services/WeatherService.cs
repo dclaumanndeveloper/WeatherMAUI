@@ -1,12 +1,17 @@
 ﻿using System.Net.Http.Json;
+using Newtonsoft.Json;
+using WeatherTwentyOne.Models;
+using System.ComponentModel;
 
 namespace WeatherClient2021;
 
 public class WeatherService : IWeatherService
 {
+    
     static List<Location> locations = new()
     {
-        new Location { Name = "Redmond", Coordinate = new Coordinate(47.6740, 122.1215), Icon = "fluent_weather_cloudy_20_filled.png", WeatherStation = "USA", Value = "62°" },
+
+        new Location { Name = "Redmond", Coordinate = new Coordinate(47.6740, 122.1215), Icon = "fluent_weather_cloudy_20_filled.png", WeatherStation = "BR", Value = "25°" },
         new Location { Name = "St. Louis", Coordinate = new Coordinate(38.6270, 90.1994), Icon = "fluent_weather_rain_showers_night_20_filled.png", WeatherStation = "USA", Value = "74°" },
         new Location { Name = "Boston", Coordinate = new Coordinate(42.3601, 71.0589), Icon = "fluent_weather_cloudy_20_filled.png", WeatherStation = "USA", Value = "54°" },
         new Location { Name = "NYC", Coordinate = new Coordinate(40.7128, 74.0060), Icon = "fluent_weather_cloudy_20_filled.png", WeatherStation = "USA", Value = "63°" },
